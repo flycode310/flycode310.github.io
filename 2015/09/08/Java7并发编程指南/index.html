@@ -1,0 +1,694 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="风雨兼程路上，家人始终守望" />
+
+
+
+  <meta name="keywords" content="concurrentcy,java," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="让梦想飞起来" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="Java7并发编程指南">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java7并发编程指南">
+<meta property="og:url" content="http://yoursite.com/2015/09/08/Java7并发编程指南/index.html">
+<meta property="og:site_name" content="让梦想飞起来">
+<meta property="og:description" content="Java7并发编程指南">
+<meta property="og:image" content="http://yoursite.com/pics/ifeve.jpg">
+<meta property="og:updated_time" content="2015-09-08T14:43:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java7并发编程指南">
+<meta name="twitter:description" content="Java7并发编程指南">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Java7并发编程指南 | 让梦想飞起来 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">让梦想飞起来</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Zammf6QtV7t_s52JeWzJ','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Java7并发编程指南
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-08T11:42:34+08:00" content="2015-09-08">
+            2015-09-08
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/java/" itemprop="url" rel="index">
+                  <span itemprop="name">java</span>
+                </a>
+              </span>
+
+              
+              
+                ， 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/java/cocurrency/" itemprop="url" rel="index">
+                  <span itemprop="name">cocurrency</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox"
+                 href="/pics/ifeve.jpg" rel="gallery_ciebgxvey000066cm14s0zgye"
+                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="/pics/ifeve.jpg" itemprop="contentUrl"/>
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <span itemprop="articleBody"><h4 id="目录">目录</h4><h5 id="前言"><a href="http://ifeve.com/java-7-concurrency-cookbook-preface/" target="_blank" rel="external">前言</a></h5><h4 id="第一章_线程管理">第一章 线程管理</h4><h5 id="1-_介绍">1. <a href="http://ifeve.com/thread-management-1/" target="_blank" rel="external">介绍</a></h5><h5 id="2-_线程的创建和运行">2. <a href="http://ifeve.com/thread-management-2/" target="_blank" rel="external">线程的创建和运行</a></h5><h5 id="3-_获取和设置线程信息">3. <a href="http://ifeve.com/thread-management-3/" target="_blank" rel="external">获取和设置线程信息</a></h5><h5 id="4-_线程的中断">4. <a href="http://ifeve.com/thread-management-4/" target="_blank" rel="external">线程的中断</a></h5><h5 id="5-_操作线程的中断机值">5. <a href="http://ifeve.com/thread-management-5/" target="_blank" rel="external">操作线程的中断机值</a></h5><h5 id="6-_线程的睡眠和恢复">6. <a href="http://ifeve.com/thread-management-6/" target="_blank" rel="external">线程的睡眠和恢复</a></h5><h5 id="7-_等待线程的终结">7. <a href="http://ifeve.com/thread-management-7/" target="_blank" rel="external">等待线程的终结</a></h5><h5 id="8-_守护线程的创建和运行">8. <a href="http://ifeve.com/thread-management-8/" target="_blank" rel="external">守护线程的创建和运行</a></h5><h5 id="9-_处理线程的不受控制异常">9. <a href="http://ifeve.com/thread-management-9/" target="_blank" rel="external">处理线程的不受控制异常</a></h5><h5 id="10-_使用本地线程变量">10. <a href="http://ifeve.com/thread-management-10/" target="_blank" rel="external">使用本地线程变量</a></h5><h5 id="11-_线程组">11. <a href="http://ifeve.com/thread-management-11/" target="_blank" rel="external">线程组</a></h5><h5 id="12-_处理线程组内的不受控制异常">12. <a href="http://ifeve.com/thread-management-12/" target="_blank" rel="external">处理线程组内的不受控制异常</a></h5><h5 id="13-_用线程工厂创建线程">13. <a href="http://ifeve.com/thread-management-13/" target="_blank" rel="external">用线程工厂创建线程</a></h5><h4 id="第二章_基本线程同步">第二章 基本线程同步</h4><h5 id="1-_介绍-1">1. <a href="http://ifeve.com/basic-thread-synchronization-1/" target="_blank" rel="external">介绍</a></h5><h5 id="2-_同步方法">2. <a href="http://ifeve.com/basic-thread-synchroinzation-2/" target="_blank" rel="external">同步方法</a></h5><h5 id="3-_在同步的类里安排独立属性">3. <a href="http://ifeve.com/basic-thread-synchronization-3/" target="_blank" rel="external">在同步的类里安排独立属性</a></h5><h5 id="4-_在同步代码中使用条件">4. <a href="http://ifeve.com/basic-thread-synchronization-4/" target="_blank" rel="external">在同步代码中使用条件</a></h5><h5 id="5-_使用Lock来同步代码块">5. <a href="http://ifeve.com/basic-thread-synchronization-5/" target="_blank" rel="external">使用Lock来同步代码块</a></h5><h5 id="6-_使用读/写锁来同步数据访问">6. <a href="http://ifeve.com/basic-thread-synchronization-6/" target="_blank" rel="external">使用读/写锁来同步数据访问</a></h5><h5 id="7-_修改Lock的公平性">7. <a href="http://ifeve.com/basic-thread-synchronization-7/" target="_blank" rel="external">修改Lock的公平性</a></h5><h5 id="8-_在Lock中使用多条件">8. <a href="http://ifeve.com/basic-thread-synchronization-8/" target="_blank" rel="external">在Lock中使用多条件</a></h5><h4 id="第三章_线程同步工具">第三章 线程同步工具</h4><h5 id="1-_介绍-2">1. <a href="http://ifeve.com/thread-synchronization-utilities-1/" target="_blank" rel="external">介绍</a></h5><h5 id="2-_控制并发访问一个资源">2. <a href="http://ifeve.com/thread-synchronization-utilities-2/" target="_blank" rel="external">控制并发访问一个资源</a></h5><h5 id="3-_控制并发访问多个资源">3. <a href="http://ifeve.com/thread-synchronization-utilities-3/" target="_blank" rel="external">控制并发访问多个资源</a></h5><h5 id="4-_等待多个并发事件完成">4. <a href="http://ifeve.com/thread-synchronization-utilities-4/" target="_blank" rel="external">等待多个并发事件完成</a></h5><h5 id="5-_在一个相同点同步任务">5. <a href="http://ifeve.com/thread-synchronization-utilities-5/" target="_blank" rel="external">在一个相同点同步任务</a></h5><h5 id="6-_运行并发阶段性任务">6. <a href="http://ifeve.com/thread-synchronization-utilities-6-2/" target="_blank" rel="external">运行并发阶段性任务</a></h5><h5 id="7-_控制并发阶段性任务的改变">7. <a href="http://ifeve.com/thread-synchronization-utilities-7/" target="_blank" rel="external">控制并发阶段性任务的改变</a></h5><h5 id="8-_在并发任务间交换数据">8. <a href="http://ifeve.com/thread-synchronization-utilities-8/" target="_blank" rel="external">在并发任务间交换数据</a></h5><h4 id="第四章_线程所有者">第四章 线程所有者</h4><h5 id="1-_介绍-3">1. <a href="http://ifeve.com/thread-executors-1/" target="_blank" rel="external">介绍</a></h5><h5 id="2-_创建一个线程执行者">2. <a href="http://ifeve.com/thread-executors-2/" target="_blank" rel="external">创建一个线程执行者</a></h5><h5 id="3-_创建一个大小固定的线程所有者">3. <a href="http://ifeve.com/thread-executors-3/" target="_blank" rel="external">创建一个大小固定的线程所有者</a></h5><h5 id="4-_执行者执行返回结果的任务">4. <a href="http://ifeve.com/thread-executors-4/" target="_blank" rel="external">执行者执行返回结果的任务</a></h5><h5 id="5-_运行多个任务并处里第一个结果">5. <a href="http://ifeve.com/thread-executors-5/" target="_blank" rel="external">运行多个任务并处里第一个结果</a></h5><h5 id="6-_运行多个任务并处里所有的结果">6. <a href="http://ifeve.com/thread-executors-6/" target="_blank" rel="external">运行多个任务并处里所有的结果</a></h5><h5 id="7-_在延迟后执行者运行任务">7. <a href="http://ifeve.com/thread-executors-7/" target="_blank" rel="external">在延迟后执行者运行任务</a></h5><h5 id="8-_执行者定期的执行任务">8. <a href="http://ifeve.com/thread-executors-8/" target="_blank" rel="external">执行者定期的执行任务</a></h5><h5 id="9-_执行者取消任务">9. <a href="http://ifeve.com/thread-executors-9/" target="_blank" rel="external">执行者取消任务</a></h5><h5 id="10-_执行者控制一个任务结束">10. <a href="http://ifeve.com/thread-executors-10/" target="_blank" rel="external">执行者控制一个任务结束</a></h5><h5 id="11-_执行者分离任务和处理结果">11. <a href="http://ifeve.com/thread-executors-11/" target="_blank" rel="external">执行者分离任务和处理结果</a></h5><h5 id="12-_执行者控制被执行的任务">12. <a href="http://ifeve.com/thread-executors-12/" target="_blank" rel="external">执行者控制被执行的任务</a></h5><h4 id="第五章_Fork/Join框架">第五章 Fork/Join框架</h4><h5 id="1-_介绍-4">1. <a href="http://ifeve.com/fork-join-1/" target="_blank" rel="external">介绍</a></h5><h5 id="2-_创建Fork/Join池">2. <a href="http://ifeve.com/fork-join-2/" target="_blank" rel="external">创建Fork/Join池</a></h5><h5 id="3-_加入任务的结果">3. <a href="http://ifeve.com/fork-join-3/" target="_blank" rel="external">加入任务的结果</a></h5><h5 id="4-_异步运行任务">4. <a href="http://ifeve.com/fork-join-4/" target="_blank" rel="external">异步运行任务</a></h5><h5 id="5-_任务中抛出异常">5. <a href="http://ifeve.com/fork-join-5/" target="_blank" rel="external">任务中抛出异常</a></h5><h5 id="6-_取消任务">6. <a href="http://ifeve.com/fork-join-6/" target="_blank" rel="external">取消任务</a></h5><h4 id="第六章_并发集合">第六章 并发集合</h4><h5 id="1-_介绍-5">1. <a href="http://ifeve.com/concurrent-collections-1/" target="_blank" rel="external">介绍</a></h5><h5 id="2-_使用非阻塞线程安全列表">2. <a href="http://ifeve.com/concurrent-collections-2/" target="_blank" rel="external">使用非阻塞线程安全列表</a></h5><h5 id="3-_使用阻塞线程安全列表">3. <a href="http://ifeve.com/concurrent-collections-3/" target="_blank" rel="external">使用阻塞线程安全列表</a></h5><h5 id="4-_用优先级对使用阻塞线程安全列表排序">4. <a href="http://ifeve.com/concurrent-collections-3/" target="_blank" rel="external">用优先级对使用阻塞线程安全列表排序</a></h5><h5 id="5-_使用线程安全与带有延迟元素的列表">5. <a href="http://ifeve.com/concurrent-collections-5/" target="_blank" rel="external">使用线程安全与带有延迟元素的列表</a></h5><h5 id="6-_使用线程安全的导航地图">6. <a href="http://ifeve.com/concurrent-collections-6/" target="_blank" rel="external">使用线程安全的导航地图</a></h5><h5 id="7-_生成并行随机数">7. <a href="http://ifeve.com/concurrent-collections-7/" target="_blank" rel="external">生成并行随机数</a></h5><h5 id="8-_使用原子变量">8. <a href="http://ifeve.com/concurrent-collections-8/" target="_blank" rel="external">使用原子变量</a></h5><h5 id="9-_使用原子阵列">9. <a href="http://ifeve.com/concurrent-collections-9/" target="_blank" rel="external">使用原子阵列</a></h5><h4 id="第七章_定制并发类">第七章 定制并发类</h4><h5 id="1-_介绍-6">1. <a href="http://ifeve.com/customizing-concurrency-classes-1/" target="_blank" rel="external">介绍</a></h5><h5 id="2-_定制ThreadPoolExecutor类">2. <a href="http://ifeve.com/customizing-concurrency-classes-2/" target="_blank" rel="external">定制ThreadPoolExecutor类</a></h5><h5 id="3-_实现一个优先级制的执行者类">3. <a href="http://ifeve.com/customizing-concurrency-classes-3/" target="_blank" rel="external">实现一个优先级制的执行者类</a></h5><h5 id="4-_实现ThreadFactory接口来生成自定义线程">4. <a href="http://ifeve.com/customizing-concurrency-classes-4/" target="_blank" rel="external">实现ThreadFactory接口来生成自定义线程</a></h5><h5 id="5-_在执行者对象中使用我们的ThreadFactory">5. <a href="http://ifeve.com/customizing-concurrency-classes-5/" target="_blank" rel="external">在执行者对象中使用我们的ThreadFactory</a></h5><h5 id="6-_在计划好的线程池中定制运行任务">6. <a href="http://ifeve.com/customizing-concurrency-classes-6/" target="_blank" rel="external">在计划好的线程池中定制运行任务</a></h5><h5 id="7-_实现ThreadFactory接口来生成自定义线程给Fork/Join框架">7. <a href="http://ifeve.com/customizing-concurrency-classes-7/" target="_blank" rel="external">实现ThreadFactory接口来生成自定义线程给Fork/Join框架</a></h5><h5 id="8-_在Fork/Join框架中定制运行任务">8. <a href="http://ifeve.com/customizing-concurrency-classes-8/" target="_blank" rel="external">在Fork/Join框架中定制运行任务</a></h5><h5 id="9-_实现一个自定义锁类">9. <a href="http://ifeve.com/customizing-concurrency-classes-9/" target="_blank" rel="external">实现一个自定义锁类</a></h5><h5 id="10-_实现一个基于优先级传输Queue">10. <a href="http://ifeve.com/customizing-concurrency-classes-10/" target="_blank" rel="external">实现一个基于优先级传输Queue</a></h5><h5 id="11-_实现你自己的原子对象">11. <a href="http://ifeve.com/customizing-concurrency-classes-11/" target="_blank" rel="external">实现你自己的原子对象</a></h5><h4 id="第八章_测试并发应用程序">第八章 测试并发应用程序</h4><h5 id="1-_介绍-7">1. <a href="http://ifeve.com/testing-concurrent-applications-1/" target="_blank" rel="external">介绍</a></h5><h5 id="2-_监控锁接口">2. <a href="http://ifeve.com/testing-concurrent-applications-2/" target="_blank" rel="external">监控锁接口</a></h5><h5 id="3-_监控Phaser接口">3. <a href="http://ifeve.com/testing-concurrent-applications-3/" target="_blank" rel="external">监控Phaser接口</a></h5><h5 id="4-_监控执行者框架">4. <a href="">监控执行者框架</a></h5><h5 id="5-_监控Fork/Join池">5. <a href="http://ifeve.com/testing-concurrent-applications-5-2/" target="_blank" rel="external">监控Fork/Join池</a></h5><h5 id="6-_编写有效的日志">6. <a href="http://ifeve.com/testing-concurrent-applications-6-2/" target="_blank" rel="external">编写有效的日志</a></h5><h5 id="7-_FindBugs分析并发代码">7. <a href="http://ifeve.com/testing-concurrent-applications-7/" target="_blank" rel="external">FindBugs分析并发代码</a></h5><h5 id="8-_配置Eclipse来调试并发代码">8. <a href="http://ifeve.com/testing-concurrent-applications-8/" target="_blank" rel="external">配置Eclipse来调试并发代码</a></h5><h5 id="9-_配置NetBeans来调试并发代码">9. <a href="http://ifeve.com/testing-concurrent-applications-9/" target="_blank" rel="external">配置NetBeans来调试并发代码</a></h5><h5 id="10-_MultithreadedTC测试并发代码">10. <a href="http://ifeve.com/testing-concurrent-applications-10/" target="_blank" rel="external">MultithreadedTC测试并发代码</a></h5><p>reference: <a href="http://ifeve.com/java-7-concurrency-cookbook/" target="_blank" rel="external">http://ifeve.com/java-7-concurrency-cookbook/</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/concurrentcy/" rel="tag">#concurrentcy</a>
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/25/tooffer/" rel="next">关于算法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://en.gravatar.com/userimage/80205052/4357c1f3cc071c99d3f80ae671086c1d.jpg" alt="陈亚运" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">陈亚运</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">风雨兼程路上，家人始终守望</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/flycode310" target="_blank">GitHub</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.iteye.com/" target="_blank">ITeye</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://ifeve.com/" target="_blank">并发编程网</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.importnew.com/" target="_blank">ImportNew</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blog.jobbole.com/" target="_blank">伯乐在线</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.infoq.com/cn/" target="_blank">InfoQ</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第一章_线程管理"><span class="nav-number">2.</span> <span class="nav-text">第一章 线程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_介绍"><span class="nav-number">2.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_线程的创建和运行"><span class="nav-number">2.2.</span> <span class="nav-text">2. 线程的创建和运行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_获取和设置线程信息"><span class="nav-number">2.3.</span> <span class="nav-text">3. 获取和设置线程信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_线程的中断"><span class="nav-number">2.4.</span> <span class="nav-text">4. 线程的中断</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_操作线程的中断机值"><span class="nav-number">2.5.</span> <span class="nav-text">5. 操作线程的中断机值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_线程的睡眠和恢复"><span class="nav-number">2.6.</span> <span class="nav-text">6. 线程的睡眠和恢复</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-_等待线程的终结"><span class="nav-number">2.7.</span> <span class="nav-text">7. 等待线程的终结</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-_守护线程的创建和运行"><span class="nav-number">2.8.</span> <span class="nav-text">8. 守护线程的创建和运行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-_处理线程的不受控制异常"><span class="nav-number">2.9.</span> <span class="nav-text">9. 处理线程的不受控制异常</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-_使用本地线程变量"><span class="nav-number">2.10.</span> <span class="nav-text">10. 使用本地线程变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-_线程组"><span class="nav-number">2.11.</span> <span class="nav-text">11. 线程组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12-_处理线程组内的不受控制异常"><span class="nav-number">2.12.</span> <span class="nav-text">12. 处理线程组内的不受控制异常</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13-_用线程工厂创建线程"><span class="nav-number">2.13.</span> <span class="nav-text">13. 用线程工厂创建线程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二章_基本线程同步"><span class="nav-number">3.</span> <span class="nav-text">第二章 基本线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_介绍-1"><span class="nav-number">3.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_同步方法"><span class="nav-number">3.2.</span> <span class="nav-text">2. 同步方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_在同步的类里安排独立属性"><span class="nav-number">3.3.</span> <span class="nav-text">3. 在同步的类里安排独立属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_在同步代码中使用条件"><span class="nav-number">3.4.</span> <span class="nav-text">4. 在同步代码中使用条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_使用Lock来同步代码块"><span class="nav-number">3.5.</span> <span class="nav-text">5. 使用Lock来同步代码块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_使用读/写锁来同步数据访问"><span class="nav-number">3.6.</span> <span class="nav-text">6. 使用读/写锁来同步数据访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-_修改Lock的公平性"><span class="nav-number">3.7.</span> <span class="nav-text">7. 修改Lock的公平性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-_在Lock中使用多条件"><span class="nav-number">3.8.</span> <span class="nav-text">8. 在Lock中使用多条件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三章_线程同步工具"><span class="nav-number">4.</span> <span class="nav-text">第三章 线程同步工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_介绍-2"><span class="nav-number">4.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_控制并发访问一个资源"><span class="nav-number">4.2.</span> <span class="nav-text">2. 控制并发访问一个资源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_控制并发访问多个资源"><span class="nav-number">4.3.</span> <span class="nav-text">3. 控制并发访问多个资源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_等待多个并发事件完成"><span class="nav-number">4.4.</span> <span class="nav-text">4. 等待多个并发事件完成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_在一个相同点同步任务"><span class="nav-number">4.5.</span> <span class="nav-text">5. 在一个相同点同步任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_运行并发阶段性任务"><span class="nav-number">4.6.</span> <span class="nav-text">6. 运行并发阶段性任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-_控制并发阶段性任务的改变"><span class="nav-number">4.7.</span> <span class="nav-text">7. 控制并发阶段性任务的改变</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-_在并发任务间交换数据"><span class="nav-number">4.8.</span> <span class="nav-text">8. 在并发任务间交换数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四章_线程所有者"><span class="nav-number">5.</span> <span class="nav-text">第四章 线程所有者</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_介绍-3"><span class="nav-number">5.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_创建一个线程执行者"><span class="nav-number">5.2.</span> <span class="nav-text">2. 创建一个线程执行者</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_创建一个大小固定的线程所有者"><span class="nav-number">5.3.</span> <span class="nav-text">3. 创建一个大小固定的线程所有者</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_执行者执行返回结果的任务"><span class="nav-number">5.4.</span> <span class="nav-text">4. 执行者执行返回结果的任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_运行多个任务并处里第一个结果"><span class="nav-number">5.5.</span> <span class="nav-text">5. 运行多个任务并处里第一个结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_运行多个任务并处里所有的结果"><span class="nav-number">5.6.</span> <span class="nav-text">6. 运行多个任务并处里所有的结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-_在延迟后执行者运行任务"><span class="nav-number">5.7.</span> <span class="nav-text">7. 在延迟后执行者运行任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-_执行者定期的执行任务"><span class="nav-number">5.8.</span> <span class="nav-text">8. 执行者定期的执行任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-_执行者取消任务"><span class="nav-number">5.9.</span> <span class="nav-text">9. 执行者取消任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-_执行者控制一个任务结束"><span class="nav-number">5.10.</span> <span class="nav-text">10. 执行者控制一个任务结束</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-_执行者分离任务和处理结果"><span class="nav-number">5.11.</span> <span class="nav-text">11. 执行者分离任务和处理结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12-_执行者控制被执行的任务"><span class="nav-number">5.12.</span> <span class="nav-text">12. 执行者控制被执行的任务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第五章_Fork/Join框架"><span class="nav-number">6.</span> <span class="nav-text">第五章 Fork/Join框架</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_介绍-4"><span class="nav-number">6.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_创建Fork/Join池"><span class="nav-number">6.2.</span> <span class="nav-text">2. 创建Fork/Join池</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_加入任务的结果"><span class="nav-number">6.3.</span> <span class="nav-text">3. 加入任务的结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_异步运行任务"><span class="nav-number">6.4.</span> <span class="nav-text">4. 异步运行任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_任务中抛出异常"><span class="nav-number">6.5.</span> <span class="nav-text">5. 任务中抛出异常</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_取消任务"><span class="nav-number">6.6.</span> <span class="nav-text">6. 取消任务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第六章_并发集合"><span class="nav-number">7.</span> <span class="nav-text">第六章 并发集合</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_介绍-5"><span class="nav-number">7.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_使用非阻塞线程安全列表"><span class="nav-number">7.2.</span> <span class="nav-text">2. 使用非阻塞线程安全列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_使用阻塞线程安全列表"><span class="nav-number">7.3.</span> <span class="nav-text">3. 使用阻塞线程安全列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_用优先级对使用阻塞线程安全列表排序"><span class="nav-number">7.4.</span> <span class="nav-text">4. 用优先级对使用阻塞线程安全列表排序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_使用线程安全与带有延迟元素的列表"><span class="nav-number">7.5.</span> <span class="nav-text">5. 使用线程安全与带有延迟元素的列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_使用线程安全的导航地图"><span class="nav-number">7.6.</span> <span class="nav-text">6. 使用线程安全的导航地图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-_生成并行随机数"><span class="nav-number">7.7.</span> <span class="nav-text">7. 生成并行随机数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-_使用原子变量"><span class="nav-number">7.8.</span> <span class="nav-text">8. 使用原子变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-_使用原子阵列"><span class="nav-number">7.9.</span> <span class="nav-text">9. 使用原子阵列</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第七章_定制并发类"><span class="nav-number">8.</span> <span class="nav-text">第七章 定制并发类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_介绍-6"><span class="nav-number">8.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_定制ThreadPoolExecutor类"><span class="nav-number">8.2.</span> <span class="nav-text">2. 定制ThreadPoolExecutor类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_实现一个优先级制的执行者类"><span class="nav-number">8.3.</span> <span class="nav-text">3. 实现一个优先级制的执行者类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_实现ThreadFactory接口来生成自定义线程"><span class="nav-number">8.4.</span> <span class="nav-text">4. 实现ThreadFactory接口来生成自定义线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_在执行者对象中使用我们的ThreadFactory"><span class="nav-number">8.5.</span> <span class="nav-text">5. 在执行者对象中使用我们的ThreadFactory</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_在计划好的线程池中定制运行任务"><span class="nav-number">8.6.</span> <span class="nav-text">6. 在计划好的线程池中定制运行任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-_实现ThreadFactory接口来生成自定义线程给Fork/Join框架"><span class="nav-number">8.7.</span> <span class="nav-text">7. 实现ThreadFactory接口来生成自定义线程给Fork/Join框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-_在Fork/Join框架中定制运行任务"><span class="nav-number">8.8.</span> <span class="nav-text">8. 在Fork/Join框架中定制运行任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-_实现一个自定义锁类"><span class="nav-number">8.9.</span> <span class="nav-text">9. 实现一个自定义锁类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-_实现一个基于优先级传输Queue"><span class="nav-number">8.10.</span> <span class="nav-text">10. 实现一个基于优先级传输Queue</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-_实现你自己的原子对象"><span class="nav-number">8.11.</span> <span class="nav-text">11. 实现你自己的原子对象</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第八章_测试并发应用程序"><span class="nav-number">9.</span> <span class="nav-text">第八章 测试并发应用程序</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-_介绍-7"><span class="nav-number">9.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-_监控锁接口"><span class="nav-number">9.2.</span> <span class="nav-text">2. 监控锁接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-_监控Phaser接口"><span class="nav-number">9.3.</span> <span class="nav-text">3. 监控Phaser接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-_监控执行者框架"><span class="nav-number">9.4.</span> <span class="nav-text">4. 监控执行者框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-_监控Fork/Join池"><span class="nav-number">9.5.</span> <span class="nav-text">5. 监控Fork/Join池</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-_编写有效的日志"><span class="nav-number">9.6.</span> <span class="nav-text">6. 编写有效的日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-_FindBugs分析并发代码"><span class="nav-number">9.7.</span> <span class="nav-text">7. FindBugs分析并发代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-_配置Eclipse来调试并发代码"><span class="nav-number">9.8.</span> <span class="nav-text">8. 配置Eclipse来调试并发代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-_配置NetBeans来调试并发代码"><span class="nav-number">9.9.</span> <span class="nav-text">9. 配置NetBeans来调试并发代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-_MultithreadedTC测试并发代码"><span class="nav-number">9.10.</span> <span class="nav-text">10. MultithreadedTC测试并发代码</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2013 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈亚运</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
