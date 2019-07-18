@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="go语言自带http包，可以很轻易的构建出网络服务，不用像php一样需要php-fpm">
+<meta name="keywords" content="Hexo, NexT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go-http">
+<meta property="og:url" content="http://yoursite.com/2019/07/17/2019-07-17-go-http/index.html">
+<meta property="og:site_name" content="远方">
+<meta property="og:description" content="go语言自带http包，可以很轻易的构建出网络服务，不用像php一样需要php-fpm">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github-1254143160.cos.ap-beijing.myqcloud.com/images/image-20190718194450974.png">
+<meta property="og:updated_time" content="2019-07-18T12:18:46.194Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="go-http">
+<meta name="twitter:description" content="go语言自带http包，可以很轻易的构建出网络服务，不用像php一样需要php-fpm">
+<meta name="twitter:image" content="https://github-1254143160.cos.ap-beijing.myqcloud.com/images/image-20190718194450974.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/17/2019-07-17-go-http/">
+
+
+
+
+
+  <title>go-http | 远方</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">梦想与远方</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/17/2019-07-17-go-http/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远方">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">go-http</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-17T10:55:09+08:00">
+                2019-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>go语言自带http包，可以很轻易的构建出网络服务，不用像php一样需要php-fpm</p>
+<a id="more"></a>
+<p>go版本1.11</p>
+<p>使用默认路由的http代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sayhelloName</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	r.ParseForm()  <span class="comment">//解析参数，默认是不会解析的</span></span><br><span class="line">	fmt.Println(r.Form)  <span class="comment">//这些信息是输出到服务器端的打印信息</span></span><br><span class="line">	fmt.Println(<span class="string">"path"</span>, r.URL.Path)</span><br><span class="line">	fmt.Println(<span class="string">"scheme"</span>, r.URL.Scheme)</span><br><span class="line">	fmt.Println(r.Form[<span class="string">"url_long"</span>])</span><br><span class="line">	<span class="keyword">for</span> k, v := <span class="keyword">range</span> r.Form &#123;</span><br><span class="line">		fmt.Println(<span class="string">"key:"</span>, k)</span><br><span class="line">		fmt.Println(<span class="string">"val:"</span>, strings.Join(v, <span class="string">""</span>))</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Fprintf(w, <span class="string">"Hello astaxie!"</span>) <span class="comment">//这个写入到w的是输出到客户端的</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">"/"</span>, sayhelloName) <span class="comment">//设置访问的路由</span></span><br><span class="line">	err := http.ListenAndServe(<span class="string">":9090"</span>, <span class="literal">nil</span>) <span class="comment">//设置监听的端口</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">"ListenAndServe: "</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>http.HandleFunc里设置了默认的路由规则</p>
+<p>默认路由规则的关键数据结构</p>
+<p><img src="https://github-1254143160.cos.ap-beijing.myqcloud.com/images/image-20190718194450974.png" alt="image-20190718194450974"></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DefaultServeMux is the default ServeMux used by Serve.</span></span><br><span class="line"><span class="keyword">var</span> DefaultServeMux = &amp;defaultServeMux</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> defaultServeMux ServeMux</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HandleFunc registers the handler function for the given pattern</span></span><br><span class="line"><span class="comment">// in the DefaultServeMux.</span></span><br><span class="line"><span class="comment">// The documentation for ServeMux explains how patterns are matched.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HandleFunc</span><span class="params">(pattern <span class="keyword">string</span>, handler <span class="keyword">func</span>(ResponseWriter, *Request)</span>)</span> &#123;</span><br><span class="line">   DefaultServeMux.HandleFunc(pattern, handler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HandleFunc registers the handler function for the given pattern.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(mux *ServeMux)</span> <span class="title">HandleFunc</span><span class="params">(pattern <span class="keyword">string</span>, handler <span class="keyword">func</span>(ResponseWriter, *Request)</span>)</span> &#123;</span><br><span class="line">   <span class="keyword">if</span> handler == <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="built_in">panic</span>(<span class="string">"http: nil handler"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">   mux.Handle(pattern, HandlerFunc(handler))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里设计到一个接口<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A Handler responds to an HTTP request.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// ServeHTTP should write reply headers and data to the ResponseWriter</span></span><br><span class="line"><span class="comment">// and then return. Returning signals that the request is finished; it</span></span><br><span class="line"><span class="comment">// is not valid to use the ResponseWriter or read from the</span></span><br><span class="line"><span class="comment">// Request.Body after or concurrently with the completion of the</span></span><br><span class="line"><span class="comment">// ServeHTTP call.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Depending on the HTTP client software, HTTP protocol version, and</span></span><br><span class="line"><span class="comment">// any intermediaries between the client and the Go server, it may not</span></span><br><span class="line"><span class="comment">// be possible to read from the Request.Body after writing to the</span></span><br><span class="line"><span class="comment">// ResponseWriter. Cautious handlers should read the Request.Body</span></span><br><span class="line"><span class="comment">// first, and then reply.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Except for reading the body, handlers should not modify the</span></span><br><span class="line"><span class="comment">// provided Request.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// If ServeHTTP panics, the server (the caller of ServeHTTP) assumes</span></span><br><span class="line"><span class="comment">// that the effect of the panic was isolated to the active request.</span></span><br><span class="line"><span class="comment">// It recovers the panic, logs a stack trace to the server error log,</span></span><br><span class="line"><span class="comment">// and either closes the network connection or sends an HTTP/2</span></span><br><span class="line"><span class="comment">// RST_STREAM, depending on the HTTP protocol. To abort a handler so</span></span><br><span class="line"><span class="comment">// the client sees an interrupted response but the server doesn't log</span></span><br><span class="line"><span class="comment">// an error, panic with the value ErrAbortHandler.</span></span><br><span class="line"><span class="keyword">type</span> Handler <span class="keyword">interface</span> &#123;</span><br><span class="line">	ServeHTTP(ResponseWriter, *Request)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个接口贯穿请求处理的始终</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Handle registers the handler for the given pattern.</span></span><br><span class="line"><span class="comment">// If a handler already exists for pattern, Handle panics.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(mux *ServeMux)</span> <span class="title">Handle</span><span class="params">(pattern <span class="keyword">string</span>, handler Handler)</span></span> &#123;</span><br><span class="line">   mux.mu.Lock()</span><br><span class="line">   <span class="keyword">defer</span> mux.mu.Unlock()</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> pattern == <span class="string">""</span> &#123;</span><br><span class="line">      <span class="built_in">panic</span>(<span class="string">"http: invalid pattern"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> handler == <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="built_in">panic</span>(<span class="string">"http: nil handler"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> _, exist := mux.m[pattern]; exist &#123;</span><br><span class="line">      <span class="built_in">panic</span>(<span class="string">"http: multiple registrations for "</span> + pattern)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> mux.m == <span class="literal">nil</span> &#123;</span><br><span class="line">      mux.m = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]muxEntry)</span><br><span class="line">   &#125;</span><br><span class="line">   mux.m[pattern] = muxEntry&#123;h: handler, pattern: pattern&#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> pattern[<span class="number">0</span>] != <span class="string">'/'</span> &#123;</span><br><span class="line">      mux.hosts = <span class="literal">true</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到目前为止是http.HandleFunc定义并初始化变量DefaultServeMux的过程，接下来从http链接的处理来分析</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ListenAndServe listens on the TCP network address addr and then calls</span></span><br><span class="line"><span class="comment">// Serve with handler to handle requests on incoming connections.</span></span><br><span class="line"><span class="comment">// Accepted connections are configured to enable TCP keep-alives.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// The handler is typically nil, in which case the DefaultServeMux is used.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// ListenAndServe always returns a non-nil error.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListenAndServe</span><span class="params">(addr <span class="keyword">string</span>, handler Handler)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">   server := &amp;Server&#123;Addr: addr, Handler: handler&#125;</span><br><span class="line">   <span class="keyword">return</span> server.ListenAndServe()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ListenAndServe listens on the TCP network address srv.Addr and then</span></span><br><span class="line"><span class="comment">// calls Serve to handle requests on incoming connections.</span></span><br><span class="line"><span class="comment">// Accepted connections are configured to enable TCP keep-alives.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// If srv.Addr is blank, ":http" is used.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// ListenAndServe always returns a non-nil error. After Shutdown or Close,</span></span><br><span class="line"><span class="comment">// the returned error is ErrServerClosed.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(srv *Server)</span> <span class="title">ListenAndServe</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">   <span class="keyword">if</span> srv.shuttingDown() &#123;</span><br><span class="line">      <span class="keyword">return</span> ErrServerClosed</span><br><span class="line">   &#125;</span><br><span class="line">   addr := srv.Addr</span><br><span class="line">   <span class="keyword">if</span> addr == <span class="string">""</span> &#123;</span><br><span class="line">      addr = <span class="string">":http"</span></span><br><span class="line">   &#125;</span><br><span class="line">   ln, err := net.Listen(<span class="string">"tcp"</span>, addr)</span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> err</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> srv.Serve(tcpKeepAliveListener&#123;ln.(*net.TCPListener)&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Serve accepts incoming connections on the Listener l, creating a</span></span><br><span class="line"><span class="comment">// new service goroutine for each. The service goroutines read requests and</span></span><br><span class="line"><span class="comment">// then call srv.Handler to reply to them.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// HTTP/2 support is only enabled if the Listener returns *tls.Conn</span></span><br><span class="line"><span class="comment">// connections and they were configured with "h2" in the TLS</span></span><br><span class="line"><span class="comment">// Config.NextProtos.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Serve always returns a non-nil error and closes l.</span></span><br><span class="line"><span class="comment">// After Shutdown or Close, the returned error is ErrServerClosed.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(srv *Server)</span> <span class="title">Serve</span><span class="params">(l net.Listener)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">   <span class="keyword">if</span> fn := testHookServerServe; fn != <span class="literal">nil</span> &#123;</span><br><span class="line">      fn(srv, l) <span class="comment">// call hook with unwrapped listener</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   l = &amp;onceCloseListener&#123;Listener: l&#125;</span><br><span class="line">   <span class="keyword">defer</span> l.Close()</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> err := srv.setupHTTP2_Serve(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> err</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> !srv.trackListener(&amp;l, <span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> ErrServerClosed</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">defer</span> srv.trackListener(&amp;l, <span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> tempDelay time.Duration     <span class="comment">// how long to sleep on accept failure</span></span><br><span class="line">   baseCtx := context.Background() <span class="comment">// base is always background, per Issue 16220</span></span><br><span class="line">   ctx := context.WithValue(baseCtx, ServerContextKey, srv)</span><br><span class="line">   <span class="keyword">for</span> &#123;</span><br><span class="line">      rw, e := l.Accept()</span><br><span class="line">      <span class="keyword">if</span> e != <span class="literal">nil</span> &#123;</span><br><span class="line">         <span class="keyword">select</span> &#123;</span><br><span class="line">         <span class="keyword">case</span> &lt;-srv.getDoneChan():</span><br><span class="line">            <span class="keyword">return</span> ErrServerClosed</span><br><span class="line">         <span class="keyword">default</span>:</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">if</span> ne, ok := e.(net.Error); ok &amp;&amp; ne.Temporary() &#123;</span><br><span class="line">            <span class="keyword">if</span> tempDelay == <span class="number">0</span> &#123;</span><br><span class="line">               tempDelay = <span class="number">5</span> * time.Millisecond</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               tempDelay *= <span class="number">2</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> max := <span class="number">1</span> * time.Second; tempDelay &gt; max &#123;</span><br><span class="line">               tempDelay = max</span><br><span class="line">            &#125;</span><br><span class="line">            srv.logf(<span class="string">"http: Accept error: %v; retrying in %v"</span>, e, tempDelay)</span><br><span class="line">            time.Sleep(tempDelay)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">return</span> e</span><br><span class="line">      &#125;</span><br><span class="line">      tempDelay = <span class="number">0</span></span><br><span class="line">      c := srv.newConn(rw)</span><br><span class="line">      c.setState(c.rwc, StateNew) <span class="comment">// before Serve can return</span></span><br><span class="line">      <span class="keyword">go</span> c.serve(ctx)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后执行c.serve(ctx)</p>
+<p>在c.serve中执行c.readRequest(ctx)获取请求链接</p>
+<p>然后执行serverHandler{c.server}.ServeHTTP(w, w.req)，这一步就是根据请求的uri匹配需要执行的func</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// serverHandler delegates to either the server's Handler or</span></span><br><span class="line"><span class="comment">// DefaultServeMux and also handles "OPTIONS *" requests.</span></span><br><span class="line"><span class="keyword">type</span> serverHandler <span class="keyword">struct</span> &#123;</span><br><span class="line">   srv *Server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(sh serverHandler)</span> <span class="title">ServeHTTP</span><span class="params">(rw ResponseWriter, req *Request)</span></span> &#123;</span><br><span class="line">   handler := sh.srv.Handler</span><br><span class="line">   <span class="keyword">if</span> handler == <span class="literal">nil</span> &#123;</span><br><span class="line">      handler = DefaultServeMux</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> req.RequestURI == <span class="string">"*"</span> &amp;&amp; req.Method == <span class="string">"OPTIONS"</span> &#123;</span><br><span class="line">      handler = globalOptionsHandler&#123;&#125;</span><br><span class="line">   &#125;</span><br><span class="line">   handler.ServeHTTP(rw, req)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用默认的路由，所以handler == nil，因此执行默认的路由</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ServeHTTP dispatches the request to the handler whose</span></span><br><span class="line"><span class="comment">// pattern most closely matches the request URL.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(mux *ServeMux)</span> <span class="title">ServeHTTP</span><span class="params">(w ResponseWriter, r *Request)</span></span> &#123;</span><br><span class="line">   <span class="keyword">if</span> r.RequestURI == <span class="string">"*"</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> r.ProtoAtLeast(<span class="number">1</span>, <span class="number">1</span>) &#123;</span><br><span class="line">         w.Header().Set(<span class="string">"Connection"</span>, <span class="string">"close"</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      w.WriteHeader(StatusBadRequest)</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">   &#125;</span><br><span class="line">   h, _ := mux.Handler(r)</span><br><span class="line">   h.ServeHTTP(w, r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Handler returns the handler to use for the given request,</span></span><br><span class="line"><span class="comment">// consulting r.Method, r.Host, and r.URL.Path. It always returns</span></span><br><span class="line"><span class="comment">// a non-nil handler. If the path is not in its canonical form, the</span></span><br><span class="line"><span class="comment">// handler will be an internally-generated handler that redirects</span></span><br><span class="line"><span class="comment">// to the canonical path. If the host contains a port, it is ignored</span></span><br><span class="line"><span class="comment">// when matching handlers.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// The path and host are used unchanged for CONNECT requests.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Handler also returns the registered pattern that matches the</span></span><br><span class="line"><span class="comment">// request or, in the case of internally-generated redirects,</span></span><br><span class="line"><span class="comment">// the pattern that will match after following the redirect.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// If there is no registered handler that applies to the request,</span></span><br><span class="line"><span class="comment">// Handler returns a ``page not found'' handler and an empty pattern.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(mux *ServeMux)</span> <span class="title">Handler</span><span class="params">(r *Request)</span> <span class="params">(h Handler, pattern <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// CONNECT requests are not canonicalized.</span></span><br><span class="line">   <span class="keyword">if</span> r.Method == <span class="string">"CONNECT"</span> &#123;</span><br><span class="line">      <span class="comment">// If r.URL.Path is /tree and its handler is not registered,</span></span><br><span class="line">      <span class="comment">// the /tree -&gt; /tree/ redirect applies to CONNECT requests</span></span><br><span class="line">      <span class="comment">// but the path canonicalization does not.</span></span><br><span class="line">      <span class="keyword">if</span> u, ok := mux.redirectToPathSlash(r.URL.Host, r.URL.Path, r.URL); ok &#123;</span><br><span class="line">         <span class="keyword">return</span> RedirectHandler(u.String(), StatusMovedPermanently), u.Path</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> mux.handler(r.Host, r.URL.Path)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// All other requests have any port stripped and path cleaned</span></span><br><span class="line">   <span class="comment">// before passing to mux.handler.</span></span><br><span class="line">   host := stripHostPort(r.Host)</span><br><span class="line">   path := cleanPath(r.URL.Path)</span><br><span class="line"></span><br><span class="line">   <span class="comment">// If the given path is /tree and its handler is not registered,</span></span><br><span class="line">   <span class="comment">// redirect for /tree/.</span></span><br><span class="line">   <span class="keyword">if</span> u, ok := mux.redirectToPathSlash(host, path, r.URL); ok &#123;</span><br><span class="line">      <span class="keyword">return</span> RedirectHandler(u.String(), StatusMovedPermanently), u.Path</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> path != r.URL.Path &#123;</span><br><span class="line">      _, pattern = mux.handler(host, path)</span><br><span class="line">      url := *r.URL</span><br><span class="line">      url.Path = path</span><br><span class="line">      <span class="keyword">return</span> RedirectHandler(url.String(), StatusMovedPermanently), pattern</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> mux.handler(host, r.URL.Path)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// handler is the main implementation of Handler.</span></span><br><span class="line"><span class="comment">// The path is known to be in canonical form, except for CONNECT methods.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(mux *ServeMux)</span> <span class="title">handler</span><span class="params">(host, path <span class="keyword">string</span>)</span> <span class="params">(h Handler, pattern <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">   mux.mu.RLock()</span><br><span class="line">   <span class="keyword">defer</span> mux.mu.RUnlock()</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Host-specific pattern takes precedence over generic ones</span></span><br><span class="line">   <span class="keyword">if</span> mux.hosts &#123;</span><br><span class="line">      h, pattern = mux.match(host + path)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> h == <span class="literal">nil</span> &#123;</span><br><span class="line">      h, pattern = mux.match(path)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> h == <span class="literal">nil</span> &#123;</span><br><span class="line">      h, pattern = NotFoundHandler(), <span class="string">""</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后返回的就是默认注册的那个处理方法</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/11/stock-test/" rel="next" title="stock/test">
+                <i class="fa fa-chevron-left"></i> stock/test
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpeg" alt="John Chen">
+          <p class="site-author-name" itemprop="name">John Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Chen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
