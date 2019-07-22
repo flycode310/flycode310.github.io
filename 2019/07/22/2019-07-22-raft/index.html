@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="远方">
 <meta property="og:description" content="Leader选举（Leader election） 日志同步（Log replication） 安全性（Safety） 日志压缩（Log compaction） 成员变更（Membership change）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-22T08:04:11.644Z">
+<meta property="og:updated_time" content="2019-07-22T09:11:13.965Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="raft">
 <meta name="twitter:description" content="Leader选举（Leader election） 日志同步（Log replication） 安全性（Safety） 日志压缩（Log compaction） 成员变更（Membership change）">
@@ -338,7 +338,21 @@
 <li>成员变更（Membership change）</li>
 </ol>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">	A --&gt; B</span><br></pre></td></tr></table></figure>
+<p>Raft将系统中的角色分为领导者（Leader）、跟从者（Follower）和候选人（Candidate）</p>
+<ul>
+<li>Leader: 接受客户端的请求，向Follower同步请求日志，日志同步到大多数节点上后告诉Follower提交日志</li>
+<li>Follower：接受并持久化Leader同步的日志，在Leader告之日志可以提交后，提交日志</li>
+<li>Candidate：Leader选举过程中的临时角色</li>
+</ul>
+<pre class="mermaid">graph TD
+    A[client]
+    B[leader]
+    C[follower]
+    D[follower]
+    A -- send command --> B
+    B -.-> C
+    B -.-> D</pre>
+
 <p>Reference:</p>
 <p><a href="https://zhuanlan.zhihu.com/p/32052223" target="_blank" rel="noopener">Paxo、Raft分布式一致性最佳实践</a></p>
 <p><a href="https://mermaidjs.github.io/#/" target="_blank" rel="noopener">mermaid</a></p>
@@ -513,6 +527,15 @@
     NexT.Mist
   </a>
 </div>
+
+
+
+  <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
 
 
         

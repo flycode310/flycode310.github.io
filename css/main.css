@@ -1807,7 +1807,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #deff44;
+  background: #6686e8;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2886,4 +2886,8 @@ hr {
     width: auto;
     text-align: center;
   }
+}
+.mermaid {
+  background: transparent;
+  text-align: center;
 }
