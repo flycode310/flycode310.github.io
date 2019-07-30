@@ -95,13 +95,14 @@
 
 
 <meta name="description" content="Leader选举（Leader election） 日志同步（Log replication） 安全性（Safety） 日志压缩（Log compaction） 成员变更（Membership change）">
+<meta name="keywords" content="Hexo, NexT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="raft">
-<meta property="og:url" content="http://yoursite.com/2019/07/22/raft/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/07/22/2019-07-22-raft/index.html">
 <meta property="og:site_name" content="远方">
 <meta property="og:description" content="Leader选举（Leader election） 日志同步（Log replication） 安全性（Safety） 日志压缩（Log compaction） 成员变更（Membership change）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-22T09:11:13.965Z">
+<meta property="og:updated_time" content="2019-07-25T03:16:33.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="raft">
 <meta name="twitter:description" content="Leader选举（Leader election） 日志同步（Log replication） 安全性（Safety） 日志压缩（Log compaction） 成员变更（Membership change）">
@@ -133,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/22/raft/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/22/2019-07-22-raft/">
 
 
 
@@ -262,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/22/raft/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/22/2019-07-22-raft/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Chen">
@@ -352,9 +353,53 @@
     B -.-> C
     B -.-> D</pre>
 
+<p>状态转换：</p>
+<pre class="mermaid">graph TB
+    A((start up))
+    B[Follower]
+    C[Candidate]
+    D[Leader]
+    A --> B
+    B -- times out, start election--> C
+    C -- times out, new election--> C
+    C -- receives votes from majority of servers--> D
+    C -- discovers current leader or new term --> B
+    D -- discovers server with higher term--> B</pre>
+
+
+
+<p>Leader选举</p>
+<pre class="mermaid">graph LR
+    A((A))
+    B((B))
+    C((C))
+    A -- 投我 --> B
+    A -- 投我 --> C
+
+    A1((A))
+    B1((B))
+    C1((C))
+    B1 -- 好吧,就投你--> A1
+    C1 -- 好吧,就投你--> A1
+
+    A2((A))
+    B2((B))
+    C2((C))
+    B2 -. 我已经投了我自己.-> A2
+    C2 -- 好吧,就投你 --> A2
+
+    A3((A))
+    B3((B))
+    C3((C))
+    B3 -.我已经投了我自己.-> A3
+    C3 -.我也投了我自己.-> A3</pre>
+
+<p>选举出Leader后，Leader通过定期向所有的Follower发送心跳信息维持其统治。若Follower一段时间未收到Leader的心跳则认为Leader已经挂掉，再次发起Leader选举过程。</p>
+<p>日志同步</p>
 <p>Reference:</p>
 <p><a href="https://zhuanlan.zhihu.com/p/32052223" target="_blank" rel="noopener">Paxo、Raft分布式一致性最佳实践</a></p>
 <p><a href="https://mermaidjs.github.io/#/" target="_blank" rel="noopener">mermaid</a></p>
+<p><a href="markdown绘图插件----mermaid简介 - shiter编写程序的艺术 - CSDN博客">mermaid绘图</a></p>
 
       
     </div>
@@ -379,7 +424,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/17/go-http/" rel="next" title="go-http">
+              <a href="/2019/07/17/2019-07-17-go-http/" rel="next" title="go-http">
                 <i class="fa fa-chevron-left"></i> go-http
               </a>
             
@@ -388,6 +433,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/25/2019-07-25-zookeeper/" rel="prev" title="zookeeper">
+                zookeeper <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -453,7 +502,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
